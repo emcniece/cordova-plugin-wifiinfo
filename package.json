@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-wifiinfo",
+  "version": "0.0.1",
+  "description": "Cordova plugin for gathering WiFi network information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emcniece/cordova-plugin-wifiinfo.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova",
+    "plugin",
+    "wifi",
+    "info"
+  ],
+  "author": {
+    "name": "Eric McNiece",
+    "url": "https://github.com/emcniece"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emcniece/cordova-plugin-wifiinfo/issues"
+  },
+  "homepage": "https://github.com/emcniece/cordova-plugin-wifiinfo#readme"
+}

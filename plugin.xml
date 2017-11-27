@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-wifiinfo"
+    version="0.0.1">
+
+    <name>WifiInfo</name>
+    <description>WifiInfo plugin for Cordova/Phonegap</description>
+    <author>Eric McNiece</author>
+    <keywords>cordova,plugin,network,wifi,info,dhcp</keywords>
+    <license>MIT</license>
+
+    <platform name="android">
+        <js-module src="www/wifiinfo.js" name="WifiInfo">
+            <clobbers target="cordova.plugins.wifiinfo" />
+        </js-module>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        </config-file>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="WifiInfo">
+                <param name="android-package" value="net.emcniece.cordova.WifiInfo" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/net/emcniece/cordova/WifiInfo.java" target-dir="src/net/emcniece/cordova" />
+    </platform>
+
+    <platform name="ios">
+        <js-module src="www/wifiinfo.js" name="WifiInfo">
+            <clobbers target="cordova.plugins.wifiinfo" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="WifiInfo">
+                <param name="ios-package" value="WifiInfo"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/WifiInfo-Bridging-Header.h"/>
+        <source-file src="src/ios/WifiInfo.swift"/>
+        <header-file src="src/ios/Hostname.h"/>
+        <source-file src="src/ios/Hostname.m"/>
+    </platform>
+
+    <dependency id="cordova-plugin-add-swift-support" version="1.7.0"/>
+
+</plugin>
