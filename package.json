@@ -19,6 +19,11 @@
     "wifi",
     "info"
   ],
+  "engines": {
+    "cordovaDependencies": {
+      "0.0.1": { "cordova-ios": ">4.3.0"}
+    }
+  },
   "author": {
     "name": "Eric McNiece",
     "url": "https://github.com/emcniece"

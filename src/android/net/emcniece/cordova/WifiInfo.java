@@ -157,20 +157,6 @@ public class WifiInfo extends CordovaPlugin {
                 }
             });
 
-        } else if (ACTION_REINIT.equals(action)) {
-            Log.e(TAG, "Re-Initializing");
-
-            cordova.getThreadPool().execute(new Runnable() {
-                @Override
-                public void run() {
-                    onDestroy();
-                    initialize(cordova, webView);
-                    callbackContext.success();
-
-                    Log.e(TAG, "Re-Initialization complete");
-                }
-            });
-
         } else {
             Log.e(TAG, "Invalid action: " + action);
             callbackContext.error("Invalid action: " + action);

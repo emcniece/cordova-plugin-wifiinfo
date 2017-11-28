@@ -9,10 +9,6 @@ var WifiInfo = {
 
     getInfo : function(success, failure) {
         return exec(success, failure, "WifiInfo", "getInfo", []);
-    },
-
-    reInit : function(success, failure) {
-        return exec(success, failure, "WifiInfo", "reInit", []);
     }
 
 };
