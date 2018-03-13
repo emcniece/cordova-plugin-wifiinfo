@@ -40,8 +40,8 @@
         <source-file src="src/ios/WifiInfo.swift"/>
         <header-file src="src/ios/Hostname.h"/>
         <source-file src="src/ios/Hostname.m"/>
-        <dependency id="cordova-plugin-add-swift-support" version="1.7.0"/>
 
     </platform>
+        <dependency id="cordova-plugin-add-swift-support" version="1.7.1"/>
 
 </plugin>
