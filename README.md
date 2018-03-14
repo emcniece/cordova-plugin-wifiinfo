@@ -31,7 +31,7 @@ wifi.getHostname(function success(hostname){
 Returns this device's network info. Android only.
 
 ```javascript
-wifi.getHostname(function success(info){
+wifi.getInfo(function success(info){
     console.log(info); //
     /*
     {
