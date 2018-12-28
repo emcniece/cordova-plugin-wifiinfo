@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-wifiinfo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cordova plugin for gathering WiFi network information",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   ],
   "engines": {
     "cordovaDependencies": {
-      "0.0.1": { "cordova-ios": ">4.3.0"}
+      "0.0.2": { "cordova-ios": ">4.3.0"}
     }
   },
   "author": {

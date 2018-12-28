@@ -4,6 +4,9 @@ This plugin allows you to read WiFi network status information from applications
 
 **Only works with Android for now** until I figure out how to get this data in Swift.
 
+- Github: [emcniece/cordova-plugin-wifiinfo](https://github.com/emcniece/cordova-plugin-wifiinfo)
+- NPM: [cordova-plugin-wifiinfo](https://www.npmjs.com/package/cordova-plugin-wifiinfo)
+
 ## Installation
 
 In your application project directory:
@@ -15,7 +18,7 @@ cordova plugin add cordova-plugin-wifiinfo
 ## Usage ##
 
 ```javascript
-var wifi = cordova.plugins.wifiinfo;
+const wifi = cordova.plugins.wifiinfo;
 ```
 
 #### `getHostname(success, failure)`
