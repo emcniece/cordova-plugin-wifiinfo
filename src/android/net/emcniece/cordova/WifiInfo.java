@@ -246,7 +246,7 @@ public class WifiInfo extends CordovaPlugin {
         getString.setAccessible(true);
         String hostName = getString.invoke(null, "net.hostname").toString();
 
-        if (TextUtils.isEmpty(hostName) || hostName == "unknown") {
+        if (TextUtils.isEmpty(hostName) || hostName.equals("unknown")) {
             // API 26+ :
             // Querying the net.hostname system property produces a null result
             String id = Settings.Secure.getString(cordova.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
