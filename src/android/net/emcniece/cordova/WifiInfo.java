@@ -224,6 +224,7 @@ public class WifiInfo extends CordovaPlugin {
         try {
             macAddress = macAddressFromNetworkInterface(NetworkInterface.getByName("wlan0"));
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
         }
 
         obj.put("bssid", info.getBSSID());
@@ -265,6 +266,7 @@ public class WifiInfo extends CordovaPlugin {
                 macAddress = mac.toString();
             }
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
         }
 
         return macAddress;
