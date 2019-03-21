@@ -172,7 +172,6 @@ public class WifiInfo extends CordovaPlugin {
         JSONObject intfobj;
         JSONArray ipv4Addresses;
         JSONArray ipv6Addresses;
-
         List<NetworkInterface> intfs = Collections.list(NetworkInterface.getNetworkInterfaces());
         for (NetworkInterface intf : intfs) {
             if (!intf.isLoopback()) {
@@ -194,6 +193,8 @@ public class WifiInfo extends CordovaPlugin {
                 if ((ipv4Addresses.length() > 0) || (ipv6Addresses.length() > 0)) {
                     intfobj.put("ipv4Addresses", ipv4Addresses);
                     intfobj.put("ipv6Addresses", ipv6Addresses);
+                    intfobj.put("mac", macAddressFromNetworkInterface(intf));
+
                     obj.put(intf.getName(), intfobj);
                 }
             }
@@ -205,43 +206,75 @@ public class WifiInfo extends CordovaPlugin {
     private static JSONObject jsonifyDhcpInfo(DhcpInfo info) throws JSONException {
         JSONObject obj = new JSONObject();
 
-        obj.put("dns1", ipToString(info.dns1) );
-        obj.put("dns2", ipToString(info.dns2) );
-        obj.put("gateway", ipToString(info.gateway) );
-        obj.put("ip", ipToString(info.ipAddress) );
-        obj.put("lease", info.leaseDuration );
-        obj.put("netmask", ipToString(info.netmask) );
-        obj.put("server", ipToString(info.serverAddress) );
+        obj.put("dns1", ipToString(info.dns1));
+        obj.put("dns2", ipToString(info.dns2));
+        obj.put("gateway", ipToString(info.gateway));
+        obj.put("ip", ipToString(info.ipAddress));
+        obj.put("lease", info.leaseDuration);
+        obj.put("netmask", ipToString(info.netmask));
+        obj.put("server", ipToString(info.serverAddress));
 
         return obj;
     }
 
     private static JSONObject jsonifyConnection(android.net.wifi.WifiInfo info) throws JSONException {
         JSONObject obj = new JSONObject();
+        String macAddress = "02:00:00:00:00:00";
+
+        try {
+            macAddress = macAddressFromNetworkInterface(NetworkInterface.getByName("wlan0"));
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
 
         obj.put("bssid", info.getBSSID());
         obj.put("hidden", info.getHiddenSSID());
-        obj.put("ip", ipToString(info.getIpAddress()) );
+        obj.put("ip", ipToString(info.getIpAddress()));
         obj.put("speed", info.getLinkSpeed());
-        obj.put("mac", info.getMacAddress());
+        obj.put("mac", macAddress);
         obj.put("rssi", info.getRssi());
         obj.put("ssid", info.getSSID());
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             obj.put("frequency", info.getFrequency());
-        } else{
+        } else {
             obj.put("frequency", null);
         }
 
         return obj;
     }
 
-    private static String ipToString(int ip){
+    private static String ipToString(int ip) {
         return String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
     }
 
+    private static String macAddressFromNetworkInterface(NetworkInterface intf) {
+        String macAddress = "02:00:00:00:00:00";
+
+        try {
+            byte[] macBytes = intf.getHardwareAddress();
+            if (macBytes != null) {
+                StringBuilder mac = new StringBuilder();
+                for (byte b : macBytes) {
+                    mac.append(String.format("%02X:", b));
+                }
+
+                if (mac.length() > 0) {
+                    mac.deleteCharAt(mac.length() - 1);
+                }
+
+                macAddress = mac.toString();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+
+        return macAddress;
+    }
+
     // http://stackoverflow.com/questions/21898456/get-android-wifi-net-hostname-from-code
-    public static String getHostName(CordovaInterface cordova) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public static String getHostName(CordovaInterface cordova) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method getString = Build.class.getDeclaredMethod("getString", String.class);
         getString.setAccessible(true);
         String hostName = getString.invoke(null, "net.hostname").toString();
@@ -249,7 +282,8 @@ public class WifiInfo extends CordovaPlugin {
         if (TextUtils.isEmpty(hostName) || hostName.equals("unknown")) {
             // API 26+ :
             // Querying the net.hostname system property produces a null result
-            String id = Settings.Secure.getString(cordova.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+            String id = Settings.Secure.getString(cordova.getActivity().getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
             hostName = "android-" + id;
         }
         return hostName;
